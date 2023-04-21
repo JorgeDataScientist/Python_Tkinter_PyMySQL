@@ -1,4 +1,13 @@
 import tkinter as tk
+from tkinter import *
+from F_DataBase import insertarDatos as DID
+
+
+# Crear Funciones
+# -------------------------------------------------------------
+def salir():
+    ventana.destroy()
+
 
 # Crear la ventana
 # -------------------------------------------------------------
@@ -6,7 +15,7 @@ ventana = tk.Tk()
 # Agregar título
 ventana.title("Formulario de Registro")
 # Establecer tamaño de la ventana
-ventana.geometry("290x600")
+ventana.geometry("290x620")
 # No permitir cambiar el tamaño de la ventana
 ventana.resizable(False, False)
 # Color de Fondo
@@ -33,41 +42,41 @@ ed0.place(x=10, y=imagen.height() + 50)
 e1 = tk.Label(ventana, text='Nombre', bg='gray', fg='white')
 e1.place(x=10, y=imagen.height() + 90)
 # Cuadro de texto que almacena el 'Nombre'
-ed1 = tk.Entry(ventana, width=23)
-ed1.place(x=10, y=imagen.height() + 120)
+DID.nom = tk.Entry(ventana, width=23)
+DID.nom.place(x=10, y=imagen.height() + 120)
 
 # Insertando etiquetas 'Apellido Paterno'
 e2 = tk.Label(ventana, text='Apellido Paterno', bg='gray', fg='white')
 e2.place(x=10, y=imagen.height() + 160)
 # Cuadro de texto que almacena el 'Apellido Paterno'
-ed2 = tk.Entry(ventana, width=23)
-ed2.place(x=10, y=imagen.height() + 190)
+DID.apeP = tk.Entry(ventana, width=23)
+DID.apeP.place(x=10, y=imagen.height() + 190)
 
 # Insertando etiquetas 'Apellido Materno'
 e3 = tk.Label(ventana, text='Apellido Materno', bg='gray', fg='white')
 e3.place(x=10, y=imagen.height() + 230)
 # Cuadro de texto que almacena el 'Apellido Materno'
-ed3 = tk.Entry(ventana, width=23)
-ed3.place(x=10, y=imagen.height() + 260)
+DID.apepM = tk.Entry(ventana, width=23)
+DID.apepM.place(x=10, y=imagen.height() + 260)
 
 # Insertando etiquetas 'Cedula de Identidad'
 e3 = tk.Label(ventana, text='Cedula de Identidad', bg='gray', fg='white')
 e3.place(x=10, y=imagen.height() + 300)
 # Cuadro de texto que almacena el 'Cedula de Identidad'
-ed3 = tk.Entry(ventana, width=23)
-ed3.place(x=10, y=imagen.height() + 330)
+DID.ci = tk.Entry(ventana, width=23)
+DID.ci.place(x=10, y=imagen.height() + 330)
 
 # Insertando etiquetas 'Email'
 e3 = tk.Label(ventana, text='Email', bg='gray', fg='white')
 e3.place(x=10, y=imagen.height() + 370)
 # Cuadro de texto que almacena el 'Email'
-ed3 = tk.Entry(ventana, width=23)
-ed3.place(x=10, y=imagen.height() + 400)
+DID.email = tk.Entry(ventana, width=23)
+DID.email.place(x=10, y=imagen.height() + 400)
 
 # Crear Botones
 # -------------------------------------------------------------
 # Insertando Boton 'Registrar'
-boton1 = tk.Button(ventana, text='Registrar', fg='Black', width=15)
+boton1 = tk.Button(ventana, text='Registrar', fg='Black', width=15, command= DID)
 boton1.place(x=10, y=imagen.height() + 440)
 
 # Insertando Boton 'Consultar'
@@ -81,6 +90,10 @@ boton3.place(x=10, y=imagen.height() + 470)
 # # Insertando Boton 'Eliminar'
 boton4 = tk.Button(ventana, text='Eliminar', fg='Black', width=15)
 boton4.place(x=boton3.winfo_x() + boton3.winfo_width() + 150, y=imagen.height() + 470)
+
+# # Insertando Boton 'Salir'
+boton5 = tk.Button(ventana, text='Salir', fg='red', width=15, font=('Arial', 8, 'bold'), command=salir)
+boton5.place(x=10, y=imagen.height() + 500)
 
 # -------------------------------------------------------------
 # Ejecutar el bucle principal de eventos
