@@ -1,10 +1,39 @@
 import tkinter as tk
 from tkinter import *
-from F_DataBase import insertarDatos as DID
+from tkinter import messagebox
+import pymysql
 
 
 # Crear Funciones
 # -------------------------------------------------------------
+
+def insertarDatos():
+    try:
+        bd = pymysql.connect(
+            host='localhost',
+            user='root',
+            passwd='',
+            db='Python_TKinter_PyMySQL'
+        )
+        cursor = bd.cursor()
+        
+        # Consulta SQL con parámetros
+        sql = "INSERT INTO registro(nombre, apellido_paterno, apellido_materno, cedula_identidad, email) VALUES (%s, %s, %s, %s, %s)"
+        valores = (nom.get(), apeP.get(), apeM.get(), ci.get(), email.get())
+        
+        # Ejecución segura de la consulta
+        cursor.execute(sql, valores)
+        bd.commit()
+        messagebox.showinfo(message='Registro Exitoso', title='Aviso')
+    except pymysql.Error as e:
+        # Mensaje de error en caso de fallo en la conexión o ejecución de la consulta
+        messagebox.showinfo(message='Error en la conexión o consulta: {}'.format(str(e)), title='Aviso')
+        bd.rollback()
+    finally:
+        cursor.close()
+        bd.close()
+
+
 def salir():
     ventana.destroy()
 
@@ -42,41 +71,41 @@ ed0.place(x=10, y=imagen.height() + 50)
 e1 = tk.Label(ventana, text='Nombre', bg='gray', fg='white')
 e1.place(x=10, y=imagen.height() + 90)
 # Cuadro de texto que almacena el 'Nombre'
-DID.nom = tk.Entry(ventana, width=23)
-DID.nom.place(x=10, y=imagen.height() + 120)
+nom = tk.Entry(ventana, width=23)
+nom.place(x=10, y=imagen.height() + 120)
 
 # Insertando etiquetas 'Apellido Paterno'
 e2 = tk.Label(ventana, text='Apellido Paterno', bg='gray', fg='white')
 e2.place(x=10, y=imagen.height() + 160)
 # Cuadro de texto que almacena el 'Apellido Paterno'
-DID.apeP = tk.Entry(ventana, width=23)
-DID.apeP.place(x=10, y=imagen.height() + 190)
+apeP = tk.Entry(ventana, width=23)
+apeP.place(x=10, y=imagen.height() + 190)
 
 # Insertando etiquetas 'Apellido Materno'
 e3 = tk.Label(ventana, text='Apellido Materno', bg='gray', fg='white')
 e3.place(x=10, y=imagen.height() + 230)
 # Cuadro de texto que almacena el 'Apellido Materno'
-DID.apepM = tk.Entry(ventana, width=23)
-DID.apepM.place(x=10, y=imagen.height() + 260)
+apeM = tk.Entry(ventana, width=23)
+apeM.place(x=10, y=imagen.height() + 260)
 
 # Insertando etiquetas 'Cedula de Identidad'
-e3 = tk.Label(ventana, text='Cedula de Identidad', bg='gray', fg='white')
-e3.place(x=10, y=imagen.height() + 300)
+e4 = tk.Label(ventana, text='Cedula de Identidad', bg='gray', fg='white')
+e4.place(x=10, y=imagen.height() + 300)
 # Cuadro de texto que almacena el 'Cedula de Identidad'
-DID.ci = tk.Entry(ventana, width=23)
-DID.ci.place(x=10, y=imagen.height() + 330)
+ci = tk.Entry(ventana, width=23)
+ci.place(x=10, y=imagen.height() + 330)
 
 # Insertando etiquetas 'Email'
-e3 = tk.Label(ventana, text='Email', bg='gray', fg='white')
-e3.place(x=10, y=imagen.height() + 370)
+e5 = tk.Label(ventana, text='Email', bg='gray', fg='white')
+e5.place(x=10, y=imagen.height() + 370)
 # Cuadro de texto que almacena el 'Email'
-DID.email = tk.Entry(ventana, width=23)
-DID.email.place(x=10, y=imagen.height() + 400)
+email = tk.Entry(ventana, width=23)
+email.place(x=10, y=imagen.height() + 400)
 
 # Crear Botones
 # -------------------------------------------------------------
 # Insertando Boton 'Registrar'
-boton1 = tk.Button(ventana, text='Registrar', fg='Black', width=15, command= DID)
+boton1 = tk.Button(ventana, text='Registrar', fg='Black', width=15, command= insertarDatos)
 boton1.place(x=10, y=imagen.height() + 440)
 
 # Insertando Boton 'Consultar'
