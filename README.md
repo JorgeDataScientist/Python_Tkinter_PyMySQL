@@ -4,26 +4,24 @@ Crea Tabla (CREATE), Inserta (INSERT) y Elimina (DELETE)
 
 ![1682015388091](image/README/1682015388091.png)
 
-En este proyecto, he desarrollado una aplicación de registro de datos de usuario utilizando Python y la librería de GUI Tkinter.
+Este código implementa una interfaz gráfica de usuario (GUI) para el registro, actualización, eliminación y consulta de datos almacenados en una base de datos MySQL. La GUI está desarrollada en TKinter, mientras que la conexión y manipulación de la base de datos se realizan mediante la biblioteca PyMySQL.
 
-Esta aplicación permite a los usuarios ingresar sus datos personales como nombre, correo electrónico, dirección y número de teléfono en un formulario de registro fácil de usar.
+El código se divide en funciones específicas para cada tarea: `insertarDatos()` para agregar nuevos registros, `eliminar()` para eliminar registros existentes, `actualizar()` para modificar datos de registros y `consulta()` para obtener información sobre un registro específico. Además, se incluye una función `show()` que muestra todos los registros almacenados en la base de datos.
 
-Una vez que se completa el formulario, los datos del usuario se guardan en una base de datos MySQL utilizando la librería PyMySQL, lo que permite una fácil gestión y acceso a la información registrada.
+Para cada función de manipulación de datos, se establece una conexión segura con la base de datos y se ejecuta una consulta SQL con parámetros, lo que garantiza la seguridad y la integridad de los datos. En caso de errores, se manejan excepciones y se muestran mensajes de aviso al usuario.
 
-El diseño de la interfaz de usuario es intuitivo y fácil de navegar, lo que permite a los usuarios ingresar sus datos de manera rápida y sencilla. Además, la aplicación ofrece validación de datos para garantizar que los campos estén completos y sean precisos antes de guardar la información en la base de datos.
+El código es fácil de entender y seguir, y puede ser utilizado como una base para aplicaciones más complejas que requieren interacción con bases de datos MySQL.
 
-En general, esta aplicación es una herramienta útil para cualquier organización que necesite registrar y gestionar datos de usuario de manera eficiente y efectiva. La combinación de Python, Tkinter y PyMySQL permite crear una solución simple y poderosa para el registro de datos de usuario.
+En resumen, este código es una buena referencia para aquellos que desean aprender a interactuar con bases de datos MySQL desde una GUI de Python, y puede ser útil en la implementación de aplicaciones de gestión de datos simples.
 
 # Python + Tkinter + PyMySQL
 
-Create Table, Insert and Delete
+This code implements a Graphical User Interface (GUI) for registering, updating, deleting, and querying data stored in a MySQL database. The GUI is developed using TKinter, while the connection and manipulation of the database are performed using the PyMySQL library.
 
-In this project, I have developed a user data registration application using Python and the GUI library Tkinter.
+The code is divided into specific functions for each task: insertData() for adding new records, delete() for deleting existing records, update() for modifying data in records, and query() for obtaining information about a specific record. Additionally, a show() function is included that displays all the records stored in the database.
 
-This application allows users to enter their personal information such as name, email, address, and phone number in an easy-to-use registration form.
+For each data manipulation function, a secure connection with the database is established, and an SQL query with parameters is executed, ensuring the security and integrity of the data. In case of errors, exceptions are handled, and warning messages are displayed to the user.
 
-Once the form is completed, the user data is saved to a MySQL database using the PyMySQL library, allowing for easy management and access to the registered information.
+The code is easy to understand and follow, and can be used as a base for more complex applications that require interaction with MySQL databases.
 
-The user interface design is intuitive and easy to navigate, allowing users to quickly and easily enter their data. Additionally, the application offers data validation to ensure that fields are complete and accurate before saving information to the database.
-
-Overall, this application is a useful tool for any organization that needs to efficiently and effectively record and manage user data. The combination of Python, Tkinter, and PyMySQL allows for a simple yet powerful solution for user data registration.
+In summary, this code is a good reference for those who want to learn how to interact with MySQL databases from a Python GUI, and can be useful in implementing simple data management applications.
