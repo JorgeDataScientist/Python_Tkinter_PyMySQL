@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 import pymysql
+import webbrowser
 
 
 # Crear Funciones
@@ -169,6 +170,16 @@ def salir():
     ventana.destroy()
 
 
+def abrir_linkedin(event):
+    webbrowser.open_new("https://www.linkedin.com/in/jljorge/")
+
+def cambiar_cursor_a_mano(event):
+    event.widget.config(cursor="hand2")
+
+def restaurar_cursor_original(event):
+    event.widget.config(cursor="")
+
+
 # Crear la ventana
 # -------------------------------------------------------------
 ventana = tk.Tk()
@@ -180,6 +191,7 @@ ventana.geometry("355x620")
 ventana.resizable(False, False)
 # Color de Fondo
 ventana.configure(background="light cyan")
+
 # Cargamos una imagen utilizando el método PhotoImage() y especificando la ruta de la imagen en el argumento file
 imagen = tk.PhotoImage(file='../Imagenes/tkinter.png')
 # Utilizamos el método subsample() para reducir el tamaño de la imagen por un factor de 6
@@ -258,6 +270,14 @@ boton5.place(x=40, y=imagen.height() + 500)
 # # Insertando Boton 'Show'
 boton6 = tk.Button(ventana, text='Ver DataBase', fg='blue', width=15, font=('Arial', 8, 'bold'), command=show)
 boton6.place(x=boton5.winfo_x() + boton5.winfo_width() + 180, y=imagen.height() + 500)
+
+# Asignamos la función abrir_linkedin al evento de clic en la etiqueta
+label.bind("<Button-1>", abrir_linkedin)
+# Asignamos la función cambiar_cursor_a_mano al evento de entrada del ratón en la etiqueta
+label.bind("<Enter>", cambiar_cursor_a_mano)
+# Asignamos la función restaurar_cursor_original al evento de salida del ratón de la etiqueta
+label.bind("<Leave>", restaurar_cursor_original)
+
 
 # Crear Lista
 # -------------------------------------------------------------
