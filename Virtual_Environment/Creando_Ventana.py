@@ -9,6 +9,9 @@ import webbrowser
 # -------------------------------------------------------------
 
 def insertarDatos():
+    """
+    Primero, se establece una conexión con la base de datos MySQL local utilizando los parámetros de conexión, como la dirección del host, el nombre de usuario, la contraseña y el nombre de la base de datos.
+    """
     try:
         bd = pymysql.connect(
             host='localhost',
@@ -16,33 +19,64 @@ def insertarDatos():
             passwd='',
             db='Python_TKinter_PyMySQL'
         )
+        """
+        A continuación, se crea un objeto cursor que se utiliza para ejecutar consultas SQL en la base de datos.
+        """
         cursor = bd.cursor()
         
-        # Consulta SQL con parámetros
+        """
+        Luego se define una consulta SQL que se va a ejecutar para insertar los datos en la tabla. Esta consulta tiene parámetros que se asignarán más adelante en la función.
+        """
         sql = "INSERT INTO registro(id, nombre, apellido_paterno, apellido_materno, cedula_identidad, email) VALUES (%s, %s, %s, %s, %s, %s)"
+        
+        """
+        A continuación, se crean una variable llamada valores que contiene los valores de los parámetros que se asignarán en la consulta SQL. Los valores se obtienen de las entradas de usuario id1, nom, apeP, apeM, ci y email respectivamente.
+        """
         valores = (id1.get() ,nom.get(), apeP.get(), apeM.get(), ci.get(), email.get())
         
-        # Ejecución segura de la consulta
+        """
+        Luego, se ejecuta la consulta SQL utilizando el método execute() del objeto cursor y se asignan los valores de los parámetros utilizando la variable valores.
+        """
         cursor.execute(sql, valores)
+
+        """Después de ejecutar la consulta, se confirma la transacción utilizando el método commit() de la conexión a la base de datos."""
         bd.commit()
+
+        """
+        Se eliminan los valores ingresados por el usuario de las entradas de texto nom, apeP, apeM, ci, email e id1.
+        """
         nom.delete(0, 'end')
         apeP.delete(0, 'end')
         apeM.delete(0, 'end')
         ci.delete(0, 'end')
         email.delete(0, 'end')
         id1.delete(0, 'end')
+
+        """La función show() es llamada para mostrar los datos de la tabla actualizados."""
         show()
+
+        """
+        Se muestra un mensaje de aviso utilizando la biblioteca messagebox para indicar que el registro se ha insertado correctamente.
+        """
         messagebox.showinfo(message='Registro Exitoso', title='Aviso')
+
+        """
+        Si se produce un error en la ejecución de la consulta SQL, se muestra un mensaje de error utilizando la biblioteca messagebox. La transacción se deshace utilizando el método rollback() de la conexión a la base de datos.
+        """
     except pymysql.Error as e:
-        # Mensaje de error en caso de fallo en la conexión o ejecución de la consulta
         messagebox.showinfo(message='Error en la conexión o consulta: {}'.format(str(e)), title='Aviso')
         bd.rollback()
+
+        """
+        Por último, se cierra el objeto cursor y la conexión a la base de datos utilizando los métodos close().
+        """
     finally:
         cursor.close()
         bd.close()
 
 
 def eliminar():
+    # La función "eliminar" comienza con una declaración condicional "if" que utiliza la función "messagebox.askyesno". Esta función muestra una ventana de diálogo que pregunta al usuario si está seguro de que desea eliminar el registro. Si el usuario hace clic en "sí", la función continúa con el proceso de eliminación. Si el usuario hace clic en "no", la función simplemente termina sin hacer nada.
     if messagebox.askyesno("Confirmar eliminación", "¿Está seguro que desea eliminar el registro?"):
         try:
             bd = pymysql.connect(
@@ -51,6 +85,9 @@ def eliminar():
                 passwd='',
                 db='Python_TKinter_PyMySQL'
             )
+            """
+            A continuación, se crea un objeto cursor que se utiliza para ejecutar consultas SQL en la base de datos.
+            """
             cursor = bd.cursor()
 
             # Consulta SQL con parámetros
@@ -113,6 +150,7 @@ def actualizar():
 
 
 def consulta():
+    # Primero se comprueba si se ha proporcionado un ID para la consulta a través del objeto id1. Si no se ha proporcionado, se muestra un mensaje de información y se detiene la función. En caso contrario, se continúa con la consulta.
     if(id1.get()==""):
         messagebox.showinfo("Obteniendo Datos de Consulta")
     else:
@@ -124,6 +162,10 @@ def consulta():
                 db='Python_TKinter_PyMySQL'
             )
             cursor = bd.cursor()
+
+            """
+            Se eliminan los datos actuales en los campos de entrada nom, apeP, apeM, ci, y email.
+            """
             cursor.execute("SELECT * FROM registro WHERE id=%s", (id1.get(),))
 
             nom.delete(0, 'end')
@@ -132,6 +174,9 @@ def consulta():
             ci.delete(0, 'end')
             email.delete(0, 'end')
 
+            """
+            Se recupera el primer registro de la consulta utilizando el método fetchone() del cursor. Si se encuentra un registro, se inserta la información correspondiente en los campos de entrada nom, apeP, apeM, ci, y email. En caso contrario, se muestra un mensaje de información indicando que no se encontró ningún registro con el ID proporcionado.
+            """
             row = cursor.fetchone()
             if row:
                 nom.insert(0, row[1])
@@ -143,6 +188,10 @@ def consulta():
                 messagebox.showinfo("Aviso", "No se encontró ningún registro con ese ID")
 
             bd.close()
+
+            """
+            Si se produce algún error durante la ejecución de la consulta, se muestra un mensaje de error indicando la causa del problema.
+            """
         except pymysql.Error as e:
             messagebox.showerror("Error", "Ocurrió un error en la consulta: {}".format(e))
 
@@ -156,13 +205,29 @@ def show():
     )
     cursor = bd.cursor()
     cursor.execute("SELECT * FROM registro")
+
+    """
+    Se utiliza la función "fetchall" del cursor para obtener todos los registros que cumplen con la consulta SQL.
+    """
     rows = cursor.fetchall()
+
+    """
+    Se utiliza el método "delete" del objeto "list" para borrar todos los elementos que se encuentren en el listado que se va a mostrar en la interfaz gráfica.
+    """
     list.delete(0, list.size())
 
+    """
+    Se realiza un ciclo "for" que itera sobre los registros obtenidos en el paso 4. Por cada registro, se genera una cadena de texto con los valores de los campos que se desean mostrar.
+    """
     for row in rows:
         insertarDatos = f"{row[0]} {row[1]} {row[2]} {row[3]}"
+        """
+        Se utiliza el método "insert" del objeto "list" para agregar la cadena de texto generada en el paso anterior al final del listado que se va a mostrar en la interfaz gráfica.
+        """
         list.insert(list.size() + 1, insertarDatos)
-
+    """
+    Se cierra la conexión a la base de datos mediante el método "close" del objeto "bd".
+    """
     bd.close()
 
 
